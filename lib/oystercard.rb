@@ -14,10 +14,6 @@ class Oystercard
     @balance += amount
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def in_journey?
     return false if @status == "not travelling"
     return true if @status == "travelling"
@@ -30,7 +26,14 @@ class Oystercard
   end
 
   def touch_out
+    self.deduct
     @status = "not travelling"
+  end
+
+  private
+
+  def deduct(amount = MINIMUM_FARE)
+    @balance -= amount
   end
 
 end
