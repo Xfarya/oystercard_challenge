@@ -1,5 +1,6 @@
-
 CARD_LIMIT = 90
+MINIMUM_FARE = 1
+
 class Oystercard
   attr_reader :balance
   def initialize
@@ -23,6 +24,8 @@ class Oystercard
   end
 
   def touch_in
+    raise "Insufficient funds, please top up" if @balance < MINIMUM_FARE
+    
     @status = "travelling"
   end
 

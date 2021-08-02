@@ -49,8 +49,13 @@ describe Oystercard do
 
   describe "#touch_in" do
     it "expect touch_in to update #in_journey" do
+      @card1.top_up(10)
       @card1.touch_in
       expect(@card1.in_journey?).to eq(true)
+    end
+    
+    it "does not allow touch in when balance is below minimum fare" do
+      expect { @card1.touch_in }.to raise_error "Insufficient funds, please top up"
     end
   end
 
