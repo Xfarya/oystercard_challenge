@@ -4,6 +4,7 @@ class Oystercard
   attr_reader :balance
   def initialize
     @balance = 0
+    @status = "not travelling"
   end
 
   def top_up(amount)
@@ -14,6 +15,19 @@ class Oystercard
 
   def deduct(amount)
     @balance -= amount
+  end
+
+  def in_journey?
+    return false if @status == "not travelling"
+    return true if @status == "travelling"
+  end
+
+  def touch_in
+    @status = "travelling"
+  end
+
+  def touch_out
+    @status = "not travelling"
   end
 
 end

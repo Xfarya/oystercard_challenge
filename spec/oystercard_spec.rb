@@ -11,6 +11,9 @@ describe Oystercard do
 
   it { is_expected.to respond_to(:top_up) }
   it { is_expected.to respond_to(:deduct) }
+  it { is_expected.to respond_to(:in_journey?) }
+  it { is_expected.to respond_to(:touch_in) }
+  it { is_expected.to respond_to(:touch_out) }
 
   describe "#top_up" do
     it "adds the top up amount to the balance" do
@@ -37,5 +40,25 @@ describe Oystercard do
       expect(@card1.balance).to eq(40)
     end
   end
+
+  describe "#in_journey" do
+    it "return true or false" do
+      expect(@card1.in_journey?).to be(true).or be(false)
+    end
+  end
+
+  describe "#touch_in" do
+    it "expect touch_in to update #in_journey" do
+      @card1.touch_in
+      expect(@card1.in_journey?).to eq(true)
+    end
+  end
+
+  describe "#touch_out" do
+  it "expect touch_out to update #in_journey" do
+    @card1.touch_out
+    expect(@card1.in_journey?).to eq(false)
+  end
+end
 
 end
