@@ -10,6 +10,7 @@ describe Oystercard do
   end
 
   it { is_expected.to respond_to(:top_up) }
+  it { is_expected.to respond_to(:deduct) }
 
   describe "#top_up" do
     it "adds the top up amount to the balance" do
@@ -26,6 +27,14 @@ describe Oystercard do
     it "does not allow you to #top_up beyond #{CARD_LIMIT}" do
       @card1.top_up(50)
       expect { @card1.top_up(60) }.to raise_error "Unable to top up 60, balance would exceed card limit of #{CARD_LIMIT}"
+    end
+  end
+  
+  describe "#deduct" do
+    it "check that it deducts from the balance" do
+      @card1.top_up(50)
+      @card1.deduct(10)
+      expect(@card1.balance).to eq(40)
     end
   end
 

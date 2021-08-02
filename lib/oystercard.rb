@@ -8,9 +8,12 @@ class Oystercard
 
   def top_up(amount)
     raise "Unable to top up #{amount}, balance would exceed card limit of #{CARD_LIMIT}" if @balance + amount > CARD_LIMIT
-
+    
     @balance += amount
   end
 
+  def deduct(amount)
+    @balance -= amount
+  end
 
 end
