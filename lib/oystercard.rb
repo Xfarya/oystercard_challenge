@@ -2,10 +2,11 @@ CARD_LIMIT = 90
 MINIMUM_FARE = 1
 
 class Oystercard
-  attr_reader :balance
+  attr_reader :balance, :entry_station
   def initialize
     @balance = 0
     @status = "not travelling"
+    @entry_station = nil
   end
 
   def top_up(amount)
@@ -19,9 +20,10 @@ class Oystercard
     return true if @status == "travelling"
   end
 
-  def touch_in
+  def touch_in(station)
     raise "Insufficient funds, please top up" if @balance < MINIMUM_FARE
-    
+
+    @entry_station = station
     @status = "travelling"
   end
 
@@ -35,5 +37,6 @@ class Oystercard
   def deduct(amount = MINIMUM_FARE)
     @balance -= amount
   end
+
 
 end

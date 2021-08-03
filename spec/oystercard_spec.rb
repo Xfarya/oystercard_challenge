@@ -1,9 +1,13 @@
 require 'oystercard'
 
 describe Oystercard do
+
+  let (:station) { double(:station) }
+
   before do
     @card1 = Oystercard.new
   end
+
 
   it 'checks that a card has an initial balance of 0' do
     expect(@card1.balance).to eq(0)
@@ -41,12 +45,18 @@ describe Oystercard do
   describe "#touch_in" do
     it "expect touch_in to update #in_journey" do
       @card1.top_up(10)
-      @card1.touch_in
+      @card1.touch_in(station)
       expect(@card1.in_journey?).to eq(true)
     end
     
     it "does not allow touch in when balance is below minimum fare" do
-      expect { @card1.touch_in }.to raise_error "Insufficient funds, please top up"
+      expect { @card1.touch_in(station) }.to raise_error "Insufficient funds, please top up"
+    end
+
+    it "records the entry station of the journey" do
+      @card1.top_up(10)
+      @card1.touch_in(station)
+      expect(@card1.entry_station).to eq(station)
     end
   end
 
