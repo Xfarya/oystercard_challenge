@@ -16,8 +16,7 @@ class Oystercard
   end
 
   def in_journey?
-    return false if @status == "not travelling"
-    return true if @status == "travelling"
+    !entry_station.nil?
   end
 
   def touch_in(station)
@@ -30,6 +29,7 @@ class Oystercard
   def touch_out
     self.deduct
     @status = "not travelling"
+    @entry_station = nil
   end
 
   private

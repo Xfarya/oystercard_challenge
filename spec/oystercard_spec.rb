@@ -69,6 +69,11 @@ describe Oystercard do
   it "is expected to deduct funds from balance when touch_out is called" do
     expect { @card1.touch_out }.to change { @card1.balance }.by(-1)
   end
+
+  it "entry_station returns nil on touch_out" do
+    @card1.touch_out
+    expect(@card1.entry_station).to eq nil
+  end
 end
 
 end
