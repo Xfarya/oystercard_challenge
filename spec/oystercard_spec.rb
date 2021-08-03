@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
   let (:station) { double(:station) }
+  let (:station2) { double(:station2) }
 
   before do
     @card1 = Oystercard.new
@@ -62,18 +63,29 @@ describe Oystercard do
 
   describe "#touch_out" do
   it "expect touch_out to update #in_journey" do
-    @card1.touch_out
+    @card1.touch_out(station2)
     expect(@card1.in_journey?).to eq(false)
   end
 
   it "is expected to deduct funds from balance when touch_out is called" do
-    expect { @card1.touch_out }.to change { @card1.balance }.by(-1)
+    expect { @card1.touch_out(station) }.to change { @card1.balance }.by(-1)
   end
 
   it "entry_station returns nil on touch_out" do
-    @card1.touch_out
+    @card1.touch_out(station2)
     expect(@card1.entry_station).to eq nil
   end
+end
+
+describe '#journey_log' do
+
+  it "returns touch_out station" do
+    @card1.top_up(10)
+    @card1.touch_in(station)
+    @card1.touch_out(station2)
+    expect(@card1.exit_station).to eq station2
+  end
+
 end
 
 end
