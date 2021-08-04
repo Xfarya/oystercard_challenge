@@ -2,8 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 
-  let (:station) { double("Stockwell") }
-  let (:station2) { double("Clapham North") }
+  let (:station) { double :station }
+  let (:station2) { double :station2 }
 
   before do
     @card1 = Oystercard.new
@@ -59,6 +59,7 @@ describe Oystercard do
     it "records the entry station of the journey" do
       @card1.top_up(10)
       @card1.touch_in(station)
+      p station
       expect(@card1.entry_station).to eq(station)
     end
   end
