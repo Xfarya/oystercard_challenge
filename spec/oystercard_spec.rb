@@ -2,8 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 
-  let (:station) { double(:station) }
-  let (:station2) { double(:station2) }
+  let (:station) { double("Stockwell") }
+  let (:station2) { double("Clapham North") }
 
   before do
     @card1 = Oystercard.new
@@ -20,6 +20,7 @@ describe Oystercard do
   it { is_expected.to respond_to(:touch_out) }
 
   describe "#top_up" do
+
     it "adds the top up amount to the balance" do
       @card1.top_up(10)
       expect(@card1.balance).to eq(10)
@@ -38,6 +39,7 @@ describe Oystercard do
   end
 
   describe "#in_journey" do
+
     it "return true or false" do
       expect(@card1.in_journey?).to be(true).or be(false)
     end
@@ -62,30 +64,43 @@ describe Oystercard do
   end
 
   describe "#touch_out" do
-  it "expect touch_out to update #in_journey" do
-    @card1.touch_out(station2)
-    expect(@card1.in_journey?).to eq(false)
+
+    it "expect touch_out to update #in_journey" do
+      @card1.touch_out(station2)
+      expect(@card1.in_journey?).to eq(false)
+    end
+
+    it "is expected to deduct funds from balance when touch_out is called" do
+      expect { @card1.touch_out(station) }.to change { @card1.balance }.by(-1)
+    end
+
+    it "entry_station returns nil on touch_out" do
+      @card1.touch_out(station2)
+      expect(@card1.entry_station).to eq nil
+    end
+
+    it "records the exit station of the journey" do
+      @card1.top_up(10)
+      @card1.touch_in(station)
+      @card1.touch_out(station2)
+      expect(@card1.exit_station).to eq station2
+    end
+
   end
 
-  it "is expected to deduct funds from balance when touch_out is called" do
-    expect { @card1.touch_out(station) }.to change { @card1.balance }.by(-1)
+  describe '#journey_log' do
+
+    it "is expected to containe an empty list of journeys" do
+      expect(@card1.journey_log).to be_empty
+    end
+
+    it "is expected to return a list of the entry and exit stations of the Oyster card" do
+      @card1.top_up(50)
+      @card1.touch_in(station)
+      @card1.touch_out(station2)
+      expect(@card1.journey_log).to contain_exactly({ entry_station: station, exit_station: station2 })
+    end
+
   end
-
-  it "entry_station returns nil on touch_out" do
-    @card1.touch_out(station2)
-    expect(@card1.entry_station).to eq nil
-  end
-end
-
-describe '#journey_log' do
-
-  it "returns touch_out station" do
-    @card1.top_up(10)
-    @card1.touch_in(station)
-    @card1.touch_out(station2)
-    expect(@card1.exit_station).to eq station2
-  end
-
-end
 
 end
