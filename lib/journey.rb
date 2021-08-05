@@ -1,10 +1,20 @@
 class Journey
   attr_reader :from, :to
-  def initialize(station_from)
+#   def initialize
+#     @from = station_from
+#   end
+
+  def initiate_journey(station_from)
+    if !@from.nil? && !complete?
+      raise "Incomplete journey, penalty applied"
+    end
     @from = station_from
-  end
+  end 
 
   def complete_journey(station_to)
+    if @from.nil? || complete?
+        raise "Incomplete journey, penalty applied"
+    end
     @to = station_to
   end
 
