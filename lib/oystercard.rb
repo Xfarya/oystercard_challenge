@@ -1,3 +1,5 @@
+require "./lib/journey.rb"
+
 CARD_LIMIT = 90
 MINIMUM_FARE = 1
 
@@ -22,7 +24,7 @@ class Oystercard
 
   def touch_in(station)
     raise 'Insufficient funds, please top up' if @balance < MINIMUM_FARE
-
+    # initiate_journey = Journey.new(station)
     @entry_station = station
     exit_station = nil
   end
@@ -30,6 +32,8 @@ class Oystercard
   def touch_out(station)
     self.deduct
     @exit_station = station
+    # if in_journey = false
+    # complete_journey(station)
     log_journey
     entry_station = nil
   end

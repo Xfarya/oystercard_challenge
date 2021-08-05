@@ -2,12 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
 
-<<<<<<< HEAD
   let(:station) { double :station }
-=======
-  let (:station) { double :station }
-  let (:station2) { double :station2 }
->>>>>>> cf0d8fc58cc72128b96033a10f93aa4810397846
 
   before do
     @card1 = Oystercard.new
@@ -88,11 +83,6 @@ describe Oystercard do
       @card1.top_up(10)
       @card1.touch_in(station)
       @card1.touch_out(station)
-<<<<<<< HEAD
-      p station
-      p station
-=======
->>>>>>> cf0d8fc58cc72128b96033a10f93aa4810397846
       expect(@card1.exit_station).to eq station
     end
 
