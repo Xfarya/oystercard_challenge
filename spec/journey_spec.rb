@@ -22,8 +22,9 @@ describe Journey do
 
   describe '#fare' do
   
-    it "" do
-
+    it "penalty for if journey is incomplete" do
+    journey.complete?
+    expect(journey)
     end
 
 end
