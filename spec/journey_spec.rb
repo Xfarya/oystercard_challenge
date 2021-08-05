@@ -12,4 +12,18 @@ describe Journey do
       expect(journey.to).to eq("Finchley")
     end
   end
+  
+  context "after touch_in and touch_out" do   
+    it "checks to see if journey is complete" do
+      journey.complete_journey("Finchley")
+      expect(journey.complete?).to eq true
+    end
+  end
+
+  describe '#fare' do
+  
+    it "" do
+
+    end
+
 end

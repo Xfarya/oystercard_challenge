@@ -103,12 +103,4 @@ describe Oystercard do
 
   end
 
-describe 'Station' do 
-
-  it "returns station name" do
-    
-  end
-
-end
-
 end
