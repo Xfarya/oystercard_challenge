@@ -1,11 +1,13 @@
 class Journey
-  attr_reader :from, :to
-#   def initialize
-#     @from = station_from
-#   end
+  attr_reader :from, :to, :fare
+   def initialize
+     #@from = station_from
+     @fare = 0
+   end
 
   def initiate_journey(station_from)
     if !@from.nil? && !complete?
+      # apply penalty
       raise "Incomplete journey, penalty applied"
     end
     @from = station_from
@@ -19,9 +21,17 @@ class Journey
   end
 
   def complete?
-    !@to.nil?
+    # to charge min fare
+    if !@to.nil? && !@from.nil?
+      @fare += 1 
+    else 
+      false
+    end
   end
 end
+
+# Fare will return amount to be charged to card on completion of journey 
+# Or when a penatly needs applied
 
 # complete? Boolean
 

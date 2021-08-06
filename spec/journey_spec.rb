@@ -16,17 +16,24 @@ describe Journey do
   end
   
   context "after touch_in and touch_out" do   
-    it "checks to see if journey is complete" do
+    # it "checks to see if journey is complete" do
+    #   journey.initiate_journey("Paddington")
+    #   journey.complete_journey("Finchley")
+    #   expect(journey.complete?).to eq true
+    #   expect 
+    # end
+
+    it "Removes minimum fare if journey is completed" do 
       journey.initiate_journey("Paddington")
       journey.complete_journey("Finchley")
-      expect(journey.complete?).to eq true
-    end
+      expect(journey.complete?).to eq(1)
+    end 
   end
 
   context 'when we touch_in without touch_out' do
     it "penalty for if journey is incomplete" do
       journey.initiate_journey("Paddington")
-      expect{ journey.initiate_journey("Noth Finchley") }.to raise_error "Incomplete journey, penalty applied"
+      expect{ journey.initiate_journey("North Finchley") }.to raise_error "Incomplete journey, penalty applied"
     end
   end
 
@@ -34,7 +41,7 @@ describe Journey do
     it "penalty for if journey is incomplete" do
       journey.initiate_journey("Paddington")
       journey.complete_journey("Paddington")
-      expect{ journey.complete_journey("Noth Finchley") }.to raise_error "Incomplete journey, penalty applied"
+      expect{ journey.complete_journey("North Finchley") }.to raise_error "Incomplete journey, penalty applied"
     end
   end
 end
